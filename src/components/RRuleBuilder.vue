@@ -39,7 +39,7 @@ const endDate = ref("");
 const occurrences = ref(1);
 const generatedRule = ref("");
 const startDate = props.startDate || new Date();
-const locale = props.locale || []
+const locale = props.locale || defaultLocale;
 const selectedDaysOfWeek = ref([]);
 
 const toggleDayOfWeek = (day) => {
@@ -90,17 +90,17 @@ const cancel = () => {
 <template>
   <div class="rrule-builder">
     <div class="rrule-builder__section">
-      <label for="repeat" class="rrule-builder__label">{{ defaultLocale['Repeat every'] }}:</label>
+      <label for="repeat" class="rrule-builder__label">{{ locale['Repeat every'] }}:</label>
       <div class="rrule-builder__inputs rrule-builder__repeat">
         <input v-model="repeatValue" type="number" min="1" class="rrule-builder__repeat-input" />
         <select v-model="repeatUnit" class="rrule-builder__repeat-select">
-          <option value="SECONDLY">{{ defaultLocale['Second'] }}</option>
-          <option value="MINUTELY">{{ defaultLocale['Minute'] }}</option>
-          <option value="HOURLY">{{ defaultLocale['Hour'] }}</option>
-          <option value="DAILY">{{ defaultLocale['Day'] }}</option>
-          <option value="WEEKLY">{{ defaultLocale['Week'] }}</option>
-          <option value="MONTHLY">{{ defaultLocale['Month'] }}</option>
-          <option value="YEARLY">{{ defaultLocale['Year'] }}</option>
+          <option value="SECONDLY">{{ locale['Second'] }}</option>
+          <option value="MINUTELY">{{ locale['Minute'] }}</option>
+          <option value="HOURLY">{{ locale['Hour'] }}</option>
+          <option value="DAILY">{{ locale['Day'] }}</option>
+          <option value="WEEKLY">{{ locale['Week'] }}</option>
+          <option value="MONTHLY">{{ locale['Month'] }}</option>
+          <option value="YEARLY">{{ locale['Year'] }}</option>
         </select>
       </div>
     </div>
@@ -110,54 +110,54 @@ const cancel = () => {
         <div v-for="day in daysOfWeek" :key="day" class="rrule-builder__checkbox"
           :class="{ 'rrule-builder__checkbox--active': selectedDaysOfWeek.includes(day) }" @click="toggleDayOfWeek(day)">
           <input type="checkbox" @change="toggleDayOfWeek(day)" />
-          <span>{{ defaultLocale[day] }}</span>
+          <span>{{ locale[day] }}</span>
         </div>
       </div>
     </template>
 
     <template v-if="repeatUnit === 'MONTHLY'">
       <div class="rrule-builder__section rrule-builder__section--monthly">
-        <label for="dayOfMonth" class="rrule-builder__label">{{ defaultLocale['Day of the month']}}:</label>
+        <label for="dayOfMonth" class="rrule-builder__label">{{ locale['Day of the month']}}:</label>
         <input v-model="dayOfMonth" type="number" min="1" max="31" class="rrule-builder__input" />
       </div>
     </template>
 
     <div class="rrule-builder__section rrule-builder__section--end">
-      <label for="endType" class="rrule-builder__label">{{ defaultLocale['Ends'] }}:</label>
+      <label for="endType" class="rrule-builder__label">{{ locale['Ends'] }}:</label>
       <div class="rrule-builder__inputs rule-builder__end">
         <div class="rrule-builder__end-item">
           <input v-model="endType" type="radio" name="never" id="never" value="never" />
-          <label for="never">{{ defaultLocale['Never'] }}</label>
+          <label for="never">{{ locale['Never'] }}</label>
         </div>
         <div class="rrule-builder__end-item">
           <input v-model="endType" type="radio" name="specificDate" id="specificDate" value="specificDate" />
-          <label for="specificDate">{{ defaultLocale['On date'] }}</label>
+          <label for="specificDate">{{ locale['On date'] }}</label>
         </div>
         <div class="rrule-builder__end-item">
           <input v-model="endType" type="radio" name="afterOccurrences" id="afterOccurrences" value="afterOccurrences" />
-          <label for="afterOccurrences">{{ defaultLocale['After'] }}</label>
+          <label for="afterOccurrences">{{ locale['After'] }}</label>
         </div>
       </div>
 
       <template v-if="endType === 'specificDate'">
         <div class="rrule-builder__section">
-          <label for="endDate" class="rrule-builder__label">{{ defaultLocale['Select end date'] }}:</label>
+          <label for="endDate" class="rrule-builder__label">{{ locale['Select end date'] }}:</label>
           <input v-model="endDate" type="date" class="rrule-builder__input" />
         </div>
       </template>
 
       <template v-if="endType === 'afterOccurrences'">
         <div class="rrule-builder__section">
-          <label for="occurrences" class="rrule-builder__label">{{ defaultLocale['Number of occurrences'] }}:</label>
+          <label for="occurrences" class="rrule-builder__label">{{ locale['Number of occurrences'] }}:</label>
           <input v-model="occurrences" type="number" min="1" class="rrule-builder__input" />
         </div>
       </template>
     </div>
 
     <div class="rrule-builder__section rrule-builder__action">
-      <button class="rrule-builder__button rrule-builder__button--cancel" @click="cancel">{{ defaultLocale['Cancel']
+      <button class="rrule-builder__button rrule-builder__button--cancel" @click="cancel">{{ locale['Cancel']
       }}</button>
-      <button @click="generateRecurrenceRule" class="rrule-builder__button">{{ defaultLocale['Confirm'] }}</button>
+      <button @click="generateRecurrenceRule" class="rrule-builder__button">{{ locale['Confirm'] }}</button>
     </div>
   </div>
 </template>
