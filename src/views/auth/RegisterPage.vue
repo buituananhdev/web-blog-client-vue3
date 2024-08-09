@@ -18,7 +18,7 @@
                     >
                         Create and account
                     </h1>
-                    <form class="space-y-4 md:space-y-6" action="#">
+                    <form class="space-y-4 md:space-y-6">
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 >Your email</label
@@ -27,6 +27,7 @@
                                 type="email"
                                 name="email"
                                 id="email"
+                                v-model="email"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="name@company.com"
                                 required=""
@@ -40,6 +41,7 @@
                                 type="password"
                                 name="password"
                                 id="password"
+                                v-model="password"
                                 placeholder="••••••••"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required=""
@@ -55,6 +57,7 @@
                                 type="confirm-password"
                                 name="confirm-password"
                                 id="confirm-password"
+                                v-model="confirmPassword"
                                 placeholder="••••••••"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required=""
@@ -82,7 +85,7 @@
                             </div>
                         </div>
                         <button
-                            type="submit"
+                            @click="submit()"
                             class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                         >
                             Create an account
@@ -102,22 +105,17 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNotification } from '@kyvg/vue3-notification'
+import { registerApi } from '@/services/auth.service';
 const notification = useNotification()
 const router = useRouter()
-const username = ref('')
+const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 
 const submit = async () => {
     try {
-        // Add your registration logic here
-        // Use the username, password, and confirmPassword values
-        // to send a registration request to your server or perform any necessary actions.
-
-        // For example:
-        // await registerApi({ username: username.value, password: password.value, confirmPassword: confirmPassword.value })
-
-        // After successful registration, you can redirect the user to the login page or any other page.
+        console.log('check', confirmPassword.value)
+        await registerApi({ email: email.value, password: password.value, confirmPassword: confirmPassword.value })
         router.push({ name: 'login' })
     } catch (error) {
         notification.notify({
