@@ -5,7 +5,7 @@ const routes = [
         path: '/',
         name: 'dashboard',
         component: () => import('@/views/Dashboard.vue'),
-        meta: { layout: 'auth', requiresAuth: true },
+        meta: { layout: 'empty' },
     },
     // Auth router
     {
